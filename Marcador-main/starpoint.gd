@@ -2,7 +2,7 @@ extends Sprite
 var spin
 
 func _ready():
-	spin = rand_range(3,3)
+	spin = 2
 	set_process(true)
 
 func _process(delta):

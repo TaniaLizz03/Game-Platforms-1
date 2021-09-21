@@ -4,7 +4,7 @@ extends Node2D
 signal digit_key(digit)
 signal pause(mode)
 
-const SCALE = Vector2(0.20, 0.20)
+const SCALE = Vector2(0.15, 0.15)
 const NEG = -10
 const Ratio = [0, 20, 40, 60, 70, 80, 85, 90, 95, 100]
 const VX = [[30,60], [55,90], [80,120], [110,150], [150,190]]
@@ -62,7 +62,7 @@ func _input(event):
 					start()
 
 func get_vel():
-	var factor = 2.0
+	var factor = 3.0
 	var mx = VX.size() 
 	var n = round(level / factor)
 	var f = 1.0

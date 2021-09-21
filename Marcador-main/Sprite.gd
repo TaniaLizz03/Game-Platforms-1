@@ -23,6 +23,8 @@ func _ready():
 		null, Score.SCALE*0.50, 0.50, Tween.TRANS_QUAD, Tween.TRANS_QUAD)
 	$efecto_final.interpolate_property(self, 'modulate:a',
 		null, 0, 0.3, Tween.TRANS_QUAD, Tween.EASE_OUT)
+	$efecto_bonus.interpolate_property(self, 'scale',
+		null, Score.points*500, Tween.TRANS_QUAD, Tween.TRANS_QUAD)
 	spin = rand_range(-PI, PI)
 	set_position(Vector2(rand_range(250,screensize.x-250), rand_range(150,screensize.y-150)))
 	vel = Score.get_vel()
@@ -36,15 +38,29 @@ func _process(delta):
 		if not bouncex: bouncex = true
 		if bouncey:
 			$efecto_scale.start()
-
+			vel.x *= -1
+			#$efecto_final.start()
+		else: # last-bounce-issue#7
+			$efecto_scale.start()
 			if not $bounce.playing: $bounce.play()
 			vel.x *= -1 
 	if pos.y+height >= screensize.y or pos.y-height <= 0:
 		if not bouncey: bouncey = true
 		if bouncex:
 			$efecto_scale.start()
+			vel.y *= -1
+			#$efecto_final.start()
+		else: # last-bounce-issue#7
+			$efecto_scale.start()
 			if not $bounce.playing: $bounce.play()
 			vel.y *= -1 
+	if pos.x <= 100 and pos.y-height <= 100:
+		$efecto_final.start()
+		
+	if pos.x >= 900 and pos.y-height >= 475:
+		$efecto_bonus.start()
+		$sparkle.play()
+		
 	set_position(pos)
 
 func choosen(digit): # user-signal
